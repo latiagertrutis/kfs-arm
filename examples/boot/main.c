@@ -1,4 +1,11 @@
 int main(void)
 {
-    return 0;
+    static int sum; // Expect 0 according to C standard
+
+    if (sum == 0) {
+        while (1);
+    }
+    else {
+        return 0;
+    }
 }
