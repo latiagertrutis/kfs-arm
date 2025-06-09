@@ -5,7 +5,7 @@ TARGET = example_boot.elf
 CC = arm-none-eabi-gcc
 LD = arm-none-eabi-gcc
 
-HAL =
+HAL =	$(addprefix hal/stm32f4xx/,usart/usart.c)
 SRC =	src/main.c board/stm32f407vg/startup.c \
 	$(HAL)
 
@@ -15,7 +15,7 @@ DEP = $(SRC:.c=.d)
 
 LD_SCRIPT = ./scripts/stm32f4.ld
 
-INCLUDE_DIRS = 	-Iinclude/hal/stm32f4xx
+INCLUDE_DIRS = 	-Iinclude/stm32f4xx
 CPPFLAGS = 	-mcpu=cortex-m4 -mthumb -g -O0 -std=c11 \
 		$(INCLUDE_DIRS)
 
