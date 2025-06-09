@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include "stm32f4xx.h"
 
 /* Interrupt vector table size */
 #define IVT_ARRAY_SIZE 48
@@ -53,11 +54,17 @@ static void init_bss()
 
 void isr_reset(void)
 {
+    /* Disable all interrupt in the reset function. Essential to work properly.
+       Will be re-enabled before calling main() */
+    __disable_irq();
+
     /* Place to add some hardware initialization */
     /* system_init(); */
-
     load_data_section();
     init_bss();
+
+    __enable_irq();
+
     main();
 
     /* If wanted mor rich C runtime we can remove the "-nostartfiles" and replace */
