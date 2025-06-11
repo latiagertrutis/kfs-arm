@@ -4,6 +4,7 @@ TARGET = example_boot.elf
 
 CC = arm-none-eabi-gcc
 LD = arm-none-eabi-gcc
+QEMU = qemu-system-arm
 
 HAL =	$(addprefix hal/stm32f4xx/,usart/usart.c)
 SRC =	src/main.c board/stm32f407vg/startup.c \
@@ -44,3 +45,13 @@ include $(DEP)
 
 clean:
 	@rm -rf $(TARGET) $(OBJ)
+
+test:
+	$(QEMU) -gdb tcp::3333 \
+		$(if $(HALT),-S) \
+		-cpu cortex-m4 \
+		-machine olimex-stm32-h405 \
+		-serial null \
+		-serial pty \
+		-nographic \
+		-kernel $(TARGET)
