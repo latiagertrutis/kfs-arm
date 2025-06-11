@@ -7,14 +7,14 @@ Basic example of how to configure the STM32f4-discovery board, for use of the US
 In order to test without the real hardware you must have `qemu-system-arm` installed. The following command will start the emultaion in a halted state, and open a gdb server at port `:3333`. Besides that it will open a serial console at `/dev/pts/<n>` mapped to the `USART2`.
 
 ```
-	$(QEMU) -gdb tcp::3333 \
-	    -S \
-		-cpu cortex-m4 \
-		-machine olimex-stm32-h405 \
-		-serial null \
-		-serial pty \
-		-nographic \
-		-kernel $(TARGET)
+$(QEMU) -gdb tcp::3333 \
+	-S \
+	-cpu cortex-m4 \
+	-machine olimex-stm32-h405 \
+	-serial null \
+	-serial pty \
+	-nographic \
+	-kernel $(TARGET)
 ```
 
 A qemu prompt will show. In order to start the emulation type `c` (continue). Or connect o the gdb server from `arm-none-eabi-gdb`:
