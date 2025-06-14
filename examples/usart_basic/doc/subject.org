@@ -6,7 +6,9 @@
 #+LATEX_HEADER: \usepackage[x11names]{xcolor}
 #+LATEX_HEADER: \hypersetup{linktoc = all, colorlinks = true, urlcolor = DodgerBlue1, citecolor = PaleGreen1, linkcolor = black}
 
-#+OPTIONS: \n:t H:4 num:4
+#+OPTIONS: \n:t H:4 num:4 toc:nil
+
+#+TOC: headlines 4
 
 * Embedded 101
 Boot and say hello.
