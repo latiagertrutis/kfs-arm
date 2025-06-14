@@ -3,7 +3,8 @@
 #+LATEX_HEADER: \let\oldsubsection\subsection
 #+LATEX_HEADER: \renewcommand{\subsection}{\clearpage\oldsubsection}
 #+LATEX_HEADER: \usepackage[margin=0.8in]{geometry}
-#+OPTIONS: \n:t
+
+#+OPTIONS: \n:t H:4 num:4
 
 * Embedded 101
 Boot and say hello.
@@ -11,7 +12,7 @@ Boot and say hello.
 mrodrigu [[mailto:mrodrigu@student.42.fr][mrodrigu@student.42.fr]]
 
 ** Chapter I
-*** Introduction
+*** Introduction to basics
 
 Be welcome to *Embedded 101*.
 
@@ -30,3 +31,28 @@ Good luck and have fun!
 
 #+ATTR_LATEX: :width 12cm
 [[file:doc/101.jpg]]
+
+** Chapter II
+*** Objectives
+
+Upon completion of this subject you'll have:
+
+- A program that will say "Hello 42!" from the USART
+- A HAL (Hardware Abstraction Layer) for controlling the USART peripheral
+- A tiny bootloader to initialize the device and run your program
+- A linker script (ld) that will link your code for your specific device
+- All of the previous combined into an elf file that you will flash in your device
+
+
+** Chapter III
+*** General instructions
+**** Real vs Emulated
+
+@@latex:\leavevmode\\@@
+It is not mandatory to use any specific device, although it *must be ARM architecture*. You can also run your code in qemu by using the fork for arm ~qemu-system-arm~. If you want to do the project with a real device, ask the staff, they may have some devices prepared for you. If not, you can always buy an evaluation board, they should be inexpensive. If I may suggest, look for stm32 boards, there are many kind in different shapes, and ST has loads of documentation and resources available. Some other alternatives could be from Adafruit or Raspberry. Look over the internet, there are many options!
+
+**** Language
+
+@@latex:\leavevmode\\@@
+This project has no specific constraints about the language you can use.
+
