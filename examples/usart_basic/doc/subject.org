@@ -15,8 +15,6 @@ mrodrigu [[mailto:mrodrigu@student.42.fr][mrodrigu@student.42.fr]]
 
 Be welcome to *Embedded 101*.
 
-
-
 In this project we will introduce you the basics of embedded programming. Here, in the world of the tiny, you will go back to the basics, and code like those mid 80's hackers.
 
 Okay, no kidding, you will need to manage yourself with as much as a couple hundreds of MB of RAM and no more than a MB of flash. So you will learn to be surgical in your programming and be very aware of your available resources. No more infinite virtual memory, hurray!
