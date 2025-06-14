@@ -51,8 +51,9 @@ Upon completion of this subject you'll have:
 @@latex:\leavevmode\\@@
 It is not mandatory to use any specific device, although it *must be ARM architecture*. You can also run your code in qemu by using the fork for arm ~qemu-system-arm~. If you want to do the project with a real device, ask the staff, they may have some devices prepared for you. If not, you can always buy an evaluation board, they should be inexpensive. If I may suggest, look for stm32 boards, there are many kind in different shapes, and ST has loads of documentation and resources available. Some other alternatives could be from Adafruit or Raspberry. Look over the internet, there are many options!
 
-**** Language
+**** Language and Environment
 
 @@latex:\leavevmode\\@@
-This project has no specific constraints about the language you can use.
+This project has no specific constraints about the language you can use. Although I suggest you to really give a thought to your options. Consider that almost all manufacturers provide their mappings in C/C++ format, and you can imagine how many macros mapping addresses there are in those files (I do not want to even start counting), so you would need a way to translate those. At this level you will not have any kind of abstraction whatsoever, so the language of your choice must be capable (and comfortable) to work in this environment. Not mentioning that most of the documentation is written for C so choose wisely.
 
+In the embedded world there are many, how I would call it... "shortcuts", that auto-generate code for your specific device trough evil graphic interfaces, making the user completely disregard what is happening in the background. But we are not here to be that kind of developer, am I right? We are here for be the fighters in the trenches, and build things from scratch. So, it is *forbidden* to use any of those tools. You must *understand* all part of your code, and seek for the *bare minimum setup* that gets your code working.

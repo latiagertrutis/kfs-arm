@@ -20,11 +20,14 @@ INCLUDE_DIRS = 	-Iinclude/stm32f4xx
 CPPFLAGS = 	-mcpu=cortex-m4 -mthumb -g -O0 -std=c11 \
 		$(INCLUDE_DIRS)
 
-LDFLAGS =	-mcpu=cortex-m0 \
+# Add this to use newlib nano when it is needed
+# --specs=nosys.specs \
+# --specs=nano.specs \
+
+LDFLAGS =	-mcpu=cortex-m4 \
 		-mthumb \
-		-nostartfiles \
-		--specs=nosys.specs \
-		--specs=nano.specs \
+		-nostdlib \
+		-nodefaultlibs \
 		-T $(LD_SCRIPT)
 
 all: $(TARGET)
@@ -46,7 +49,7 @@ include $(DEP)
 clean:
 	@rm -rf $(TARGET) $(OBJ)
 
-test:
+test: $(TARGET)
 	$(QEMU) -gdb tcp::3333 \
 		$(if $(HALT),-S) \
 		-cpu cortex-m4 \
