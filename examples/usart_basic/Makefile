@@ -18,6 +18,7 @@ LD_SCRIPT = ./scripts/stm32f4.ld
 
 INCLUDE_DIRS = 	-Iinclude/stm32f4xx
 CPPFLAGS = 	-mcpu=cortex-m4 -mthumb -g -O0 -std=c11 \
+		-fno-builtin \
 		$(INCLUDE_DIRS)
 
 # Add this to use newlib nano when it is needed
@@ -26,6 +27,7 @@ CPPFLAGS = 	-mcpu=cortex-m4 -mthumb -g -O0 -std=c11 \
 
 LDFLAGS =	-mcpu=cortex-m4 \
 		-mthumb \
+		-fno-builtin \
 		-nostdlib \
 		-nodefaultlibs \
 		-T $(LD_SCRIPT)
