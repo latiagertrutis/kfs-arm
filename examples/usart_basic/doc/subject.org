@@ -5,6 +5,7 @@
 #+LATEX_HEADER: \usepackage[margin=0.8in]{geometry}
 #+LATEX_HEADER: \usepackage[x11names]{xcolor}
 #+LATEX_HEADER: \hypersetup{linktoc = all, colorlinks = true, urlcolor = DodgerBlue1, citecolor = PaleGreen1, linkcolor = black}
+#+LATEX_HEADER: \usepackage{enumitem}
 
 #+OPTIONS: \n:t H:4 num:4 toc:nil
 
@@ -13,7 +14,7 @@
 * Embedded 101
 Boot and say hello.
 
-mrodrigu [[mailto:mrodrigu@student.42.fr][mrodrigu@student.42.fr]]
+mrodrigu ([[mailto:mrodrigu@student.42.fr][mrodrigu@student.42.fr]])
 
 ** Chapter I
 *** Introduction to basics
@@ -41,6 +42,7 @@ Good luck and have fun!
 
 Upon completion of this subject you'll have:
 
+#+ATTR_LATEX: :options [noitemsep]
 - A program that will say "Hello 42!" from the USART
 - A HAL (Hardware Abstraction Layer) for controlling the USART peripheral
 - A tiny bootloader to initialize the device and run your program
@@ -69,6 +71,7 @@ You can use any compiler, depending on the language you use. It is common for C 
 
 The following flags *must* be present in order to build and link your binary:
 
+#+ATTR_LATEX: :options [noitemsep]
 - ARM options:
   - ~-mcpu=xxx~
   - ~-mthumb~
@@ -90,21 +93,50 @@ Each MCU requires his own linker script, so you must write your own based on the
 @@latex:\leavevmode\\@@
 ARM architecture is *mandatory*.
 
+**** Documentation
+
+@@latex:\leavevmode\\@@
+There is a lot of documentation available online. Make sure to look at the manufacturer's web site for your specific model, they usually offer not only data sheets and user manuals, but a lot of resources and libraries from which you can get (most of the time) nice ideas for your code. As for my part, here are some useful resources I use:
+
+#+ATTR_LATEX: :options [noitemsep]
+- [[https://wiki.osdev.org/ARM_Overview][OSDev]]
+- [[https://microcontrollerslab.com/][Microcontrolerslab]]
+- For any POSIX related consultations, just go to the source: [[https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/][Open Group]]
+
+#+latex: \newpage
 **** Project organization
 
 @@latex:\leavevmode\\@@
 In a embedded project (specially a bare-metal one) it is very easy to get messy. One project can support many board with different HALs, startup codes and so on. So here is a project structure I suggest to keep things compartmentalized:
 
+#+begin_src
+|-- board <- Board specific code
+|   `-- <your-board-model>
+|       `-- startup.c
+|-- hal
+|   `-- <your-board-model>      <- There are HALs for every model supported
+|       `-- usart
+|           `-- usart.c
+|-- include
+|   |-- cmsis_compiler.h        <- Board independent includes
+|   |-- cmsis_gcc.h
+|   |-- cmsis_version.h
+|   |-- core_cm4.h
+|   |-- mpu_armv7.h
+|   `-- <your-board-model>      <- Board dependent includes
+|       |-- hal
+|       |   `-- <your-board-model>_usart_hal.h
+|       `-- <your-board-model>.h
+|-- Makefile
+|-- README.md
+|-- scripts
+|   `-- <your-board-model>.ld
+`-- src
+    `-- main.c                  <- Split in dirs if more than one app
 
+#+end_src
 
-**** Documentation
-
-@@latex:\leavevmode\\@@
-There is a lot of documentation available online. Make sure to look at the manufacturer's web site for your specific model, they usually offer not only data sheets and user manuals, but a lot of resources and libraries from which you can get (most of the time) nice ideas for your code. As for my part, here are some useful resources I use:
-- [[https://wiki.osdev.org/ARM_Overview][OSDev]]
-- [[https://microcontrollerslab.com/][Microcontrolerslab]]
-- For any POSIX related consultations, just go to the source: [[https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/][Open Group]]
-
+Substitute ~<your-board-model>~ by the board of your choice.
 
 ** Chapter IV
 *** Mandatory part
@@ -114,16 +146,21 @@ There is a lot of documentation available online. Make sure to look at the manuf
 You must make code that executes in the MCU of your choice and is capable of *writing* and *reading* characters from the serial line (UART).
 
 For emulated devices:
+
+#+ATTR_LATEX: :options [noitemsep]
 - Install ~qemu-system-arm~ in your system
 - Connect the UART of your choice to a host character device
 - Create a gdb server at port ~:3333~ and halt the MCU, so you can start it manually and inspect the code as needed
 
 For real devices:
-- Depending on the board of your choice there will be multiple ways of flashing the code. I recommend to find one that has a JTAG port and a debugger integrated (or at least a JTAG port and a external debugger). This is a standard in the industry to debug embedded devices, from which you can flash and insect your code as it was a normal binary in your local machine. If you are going this way, I recommend you pay a visit to the [[https://openocd.org/][OpenOCD]] project
 
+#+ATTR_LATEX: :options [noitemsep]
+- Depending on the board of your choice there will be multiple ways of flashing the code. I recommend to find one that has a JTAG port and a debugger integrated (or at least a JTAG port and a external debugger). This is a standard in the industry to debug embedded devices, from which you can flash and insect your code as it was a normal binary in your local machine. If you are going this way, I recommend you pay a visit to the [[https://openocd.org/][OpenOCD]] project
 - Get a serial-to-tty cable (or build one yourself if you are feeling funky), and connect it to the ~Rx~, ~Tx~ and ~GND~ pins of the UART you programmed
 
 Common points:
+
+#+ATTR_LATEX: :options [noitemsep]
 - Write startup code that will initialize your MCU and boot into your main program
 - Write a HAL driver to control the UART
 - Write a main program that will print "Hello 42!", and then will echo back in the line any printable character you type in the terminal emulator (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
@@ -133,3 +170,18 @@ Common points:
 
 @@latex:\leavevmode\\@@
 Your Makefile must compile all sources with the right flags and the right compiler. Notice that you may end with at least two different types of files: ~.c~, and ~.ld~ (if you write some assembler also ~.asm~), so make your rules correctly so all dependencies are correctly managed. For instance, if your linker script changes, your sources do not need to be recompiled into objects, but you will need to link again. No need to say, you must properly manage the dependencies of the headers.
+
+** Chapter V
+*** Bonus part
+
+Here are some ideas of interesting bonuses you can make:
+
+#+ATTR_LATEX: :options [noitemsep]
+- Add a HAL for the leds (if your board has) and use them, for example, to easily visualize a hardfault or a reset status.
+- Add some fancy text functions for the UART: formatted print with buffered characters; a cowsay?
+- Make a good use of any of your peripherals. For example, use a pwm to control a fan speed depending on the temperature of your MCU.
+
+** Chapter VI
+*** Turn-in and peer-evaluation
+
+This project will be evaluated only by humans. Push your work into a Git repository, as usual. Only the work present on your repository will be evaluated.

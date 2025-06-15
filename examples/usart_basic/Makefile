@@ -16,7 +16,7 @@ DEP = $(SRC:.c=.d)
 
 LD_SCRIPT = ./scripts/stm32f4.ld
 
-INCLUDE_DIRS = 	-Iinclude/stm32f4xx
+INCLUDE_DIRS = 	-Iinclude -Iinclude/stm32f4xx
 CPPFLAGS = 	-mcpu=cortex-m4 -mthumb -g -O0 -std=c11 \
 		-fno-builtin \
 		$(INCLUDE_DIRS)
@@ -49,7 +49,7 @@ $(TARGET): $(LD_SCRIPT) $(OBJ)
 include $(DEP)
 
 clean:
-	@rm -rf $(TARGET) $(OBJ)
+	@rm -rf $(TARGET) $(OBJ) $(DEP)
 
 test: $(TARGET)
 	$(QEMU) -gdb tcp::3333 \
