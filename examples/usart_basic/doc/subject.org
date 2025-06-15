@@ -67,9 +67,9 @@ In the embedded world there are many, how could I call it... "shortcuts", that a
 **** Compilation
 
 @@latex:\leavevmode\\@@
-You can use any compiler, depending on the language you use. It is common for C to use ~arm-none-eabi-gcc~. A *Makefile* must be turned in to compile and link the project.
+You can use any compiler, depending on the language you use. It is common for C to use ~arm-none-eabi-gcc~. A *Makefile* must be present in order to compile and link the project.
 
-The following flags *must* be present in order to build and link your binary:
+The following flags *must* be present to build and link your binary:
 
 #+ATTR_LATEX: :options [noitemsep]
 - ARM options:
@@ -107,16 +107,17 @@ There is a lot of documentation available online. Make sure to look at the manuf
 **** Project organization
 
 @@latex:\leavevmode\\@@
-In a embedded project (specially a bare-metal one) it is very easy to get messy. One project can support many board with different HALs, startup codes and so on. So here is a project structure I suggest to keep things compartmentalized:
+In a embedded project (specially a bare-metal one) it is very easy to get messy. One project can support many boards with different HALs, startup codes, and so on. So here is a project structure I suggest to keep things compartmentalized:
 
 #+begin_src
 |-- board <- Board specific code
 |   `-- <your-board-model>
 |       `-- startup.c
-|-- hal
-|   `-- <your-board-model>      <- There are HALs for every model supported
-|       `-- usart
-|           `-- usart.c
+|-- driver
+|   `-- hal
+|       `-- <your-board-model>  <- There are HALs for every model supported
+|           `-- usart
+|               `-- usart.c
 |-- include
 |   |-- cmsis_compiler.h        <- Board independent includes
 |   |-- cmsis_gcc.h
@@ -136,7 +137,7 @@ In a embedded project (specially a bare-metal one) it is very easy to get messy.
 
 #+end_src
 
-Substitute ~<your-board-model>~ by the board of your choice.
+Substitute ~<your-board-model>~ by the board of your choice. This structure can be easily extended. Notice that ~driver~ only contains ~hal~ drivers, this is because we are running without an underlying OS. Maybe in the future a OS is running and we can add here ~driver/posix~. Also look at the comment at the ~src~. For now, we will end with only one application, but, in the future we may end up with many, so we could choose a combination of ~app + board + os~.
 
 ** Chapter IV
 *** Mandatory part
@@ -166,6 +167,7 @@ Common points:
 - Write a main program that will print "Hello 42!", and then will echo back in the line any printable character you type in the terminal emulator (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
 - Write a minimal linker script that links this into an elf file that must not exceed 20KB
 
+#+latex: \newpage
 **** Makefile
 
 @@latex:\leavevmode\\@@

@@ -6,7 +6,7 @@ CC = arm-none-eabi-gcc
 LD = arm-none-eabi-gcc
 QEMU = qemu-system-arm
 
-HAL =	$(addprefix hal/stm32f4xx/,usart/usart.c)
+HAL =	$(addprefix driver/hal/stm32f4xx/,usart/usart.c)
 SRC =	src/main.c board/stm32f407vg/startup.c \
 	$(HAL)
 
