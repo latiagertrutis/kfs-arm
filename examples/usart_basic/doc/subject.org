@@ -135,11 +135,7 @@ In a embedded project (specially a bare-metal one) it is very easy to get messy.
 |           `-- usart
 |               `-- usart.c
 |-- include
-|   |-- cmsis_compiler.h        <- Board independent includes
-|   |-- cmsis_gcc.h
-|   |-- cmsis_version.h
-|   |-- core_cm4.h
-|   |-- mpu_armv7.h
+|   |-- some_include.h          <- Board independent includes
 |   `-- <your-board-model>      <- Board dependent includes
 |       |-- hal
 |       |   `-- <your-board-model>_usart_hal.h
@@ -171,7 +167,7 @@ For emulated devices:
 
 #+ATTR_LATEX: :options [noitemsep]
 - Install ~qemu-system-arm~ in your system
-- Connect the UART of your choice to a host character device
+- Connect the serial line where you will configure the UART to a host character device
 - Create a gdb server at port ~:3333~ and halt the MCU, so you can start it manually and inspect the code as needed
 
 For real devices:
