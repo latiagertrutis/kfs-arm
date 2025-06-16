@@ -32,7 +32,7 @@ Okay, no kidding, you will need to manage yourself with as much as a couple hund
 
 But, lets ask the question, why is embedded still a thing today in a world where gigs of RAM are worth a couple dimes? Well, for us, the users, couple dimes ain't a big deal, but the industry works at a different scale. When you are the big boss of a large company that needs to build a product in the order of millions, from dishwashers controllers to cars on-board computers, believe me, you will fight for the price of the last damn screw. So here optimizing the resources is critical. If you can squeeze the same logic in half the resources, then you are thinking the right way.
 
-Now a little bit of mapping trough concrete things that you will see in this set of projects. You will learn new concepts embedded (ha ha) to this amazing world: MCUs (we also have CPUs, although they are more rare); GPIOs; CAN bus; serial communications (USART, SPI, and so on); boot loaders, the embedded ones are a bit different many devices need OTA updates; JTAG; and much more.
+Now a little bit of mapping through concrete things that you will see in this set of projects. You will learn new concepts embedded (ha ha) to this amazing world: MCUs (we also have CPUs, although they are more rare); GPIOs; CAN bus; serial communications (USART, SPI, and so on); boot loaders, the embedded ones are a bit different many devices need OTA updates; JTAG; and much more.
 
 Here we will work in what is called *bare-metal code*, that is, working without an underlying OS. So you will need to directly access the resources of your MCU from registers (no worries, there are plenty of documentation and HAL libraries provided by the manufacturer, so you don't have to do the mapping yourself). This is the simplest way of starting, and it is the way that the industry has been working for the past years. As a note, the industry is moving towards using operating systems on
 embedded systems, since with the abstraction (oh mighty POSIX!) it is much easier to scale, test, and in general, develop with. But lets go step by step and start from the very basics.
@@ -66,13 +66,11 @@ Upon completion of this subject you'll have:
 ** Real vs Emulated
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Real vs Emulated}
 
-@@latex:\leavevmode\\@@
-It is not mandatory to use any specific device, although it *must be ARM architecture*. You can also run your code in qemu by using the fork for arm ~qemu-system-arm~. If you want to do the project with a real device, ask the staff, they may have some devices prepared for you. If not, you can always buy an evaluation board, they should be inexpensive. If I may suggest, look for stm32 boards, there are many kind in different shapes, and ST has loads of documentation and resources available. Some other alternatives could be from Adafruit or Raspberry. Look over the internet, there are many options!
+It is not mandatory to use any specific device, although it *must be ARM architecture*. You can also run your code in qemu by using ~qemu-system-arm~. If you want to do the project with a real device, ask the staff, they may have some devices prepared for you. If not, you can always buy an evaluation board, they should be inexpensive. If I may suggest, look for stm32 boards, there are many kind in different shapes, and ST has loads of documentation and resources available. Some other alternatives could be from Adafruit or Raspberry. Look over the internet, there are many options!
 
 ** Language and Environment
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Language and Environment}
 
-@@latex:\leavevmode\\@@
 This project has no specific constraints about the language you can use. Although I suggest you to really give a thought to your options. Consider that almost all manufacturers provide their mappings in C/C++ format, and you can imagine how many macros mapping addresses there are in those files (I do not want to even start counting), so you would need a way to translate those. At this level you will not have any kind of abstraction whatsoever, so the language of your choice must be capable (and comfortable) of working in this environment. Not mentioning that most of the documentation is written for C so choose wisely.
 
 In the embedded world there are many, how could I call it... "shortcuts", that auto-generate code for your specific device through evil graphic interfaces, making the user completely disregard what is happening in the background. But we are not here to be that kind of developer, am I right? We are here for being the fighters in the trenches, and building things from scratch. So, it is *forbidden* to use any of those tools. You must *understand* all parts of your code, and seek for the *bare minimum setup* that gets your code working.
@@ -80,7 +78,7 @@ In the embedded world there are many, how could I call it... "shortcuts", that a
 ** Compilation
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Compilation}
 
-@@latex:\leavevmode\\@@
+
 You can use any compiler, depending on the language you use. It is common for C to use ~arm-none-eabi-gcc~. A *Makefile* must be present in order to compile and link the project.
 
 The following flags *must* be present to build and link your binary:
@@ -100,19 +98,19 @@ In the ~-mcpu~ flag make sure to substitute ~xxx~ by the MCU type you are using,
 ** Linking
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Linking}
 
-@@latex:\leavevmode\\@@
+
 Each MCU requires his own linker script, so you must write your own based on the MCU documentation. It is *forbidden* to use a generated linker script. You must try to write a linker script as minimal as possible.
 
 ** Architecture
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Architecture}
 
-@@latex:\leavevmode\\@@
+
 ARM architecture is *mandatory*.
 
 ** Documentation
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Documentation}
 
-@@latex:\leavevmode\\@@
+
 There is a lot of documentation available online. Make sure to look at the manufacturer's web site for your specific model, they usually offer not only data sheets and user manuals, but a lot of resources and libraries from which you can get (most of the time) nice ideas for your code. As for my part, here are some useful resources I use:
 
 #+ATTR_LATEX: :options [noitemsep]
@@ -124,7 +122,7 @@ There is a lot of documentation available online. Make sure to look at the manuf
 ** Project organization
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Project organization}
 
-@@latex:\leavevmode\\@@
+
 In a embedded project (specially a bare-metal one) it is very easy to get messy. One project can support many boards with different HALs, startup codes, and so on. So here is a project structure I suggest to keep things compartmentalized:
 
 #+begin_src
@@ -166,7 +164,7 @@ Substitute ~<your-board-model>~ by the board of your choice. This structure can 
 ** Base
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Base}
 
-@@latex:\leavevmode\\@@
+
 You must make code that executes in the MCU of your choice and is capable of *writing* and *reading* characters from the serial line (UART).
 
 For emulated devices:
@@ -194,7 +192,6 @@ Common points:
 ** Makefile
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Makefile}
 
-@@latex:\leavevmode\\@@
 Your Makefile must compile all sources with the right flags and the right compiler. Notice that you may end with at least two different types of files: ~.c~, and ~.ld~ (if you write some assembler also ~.asm~), so make your rules correctly so all dependencies are correctly managed. For instance, if your linker script changes, your sources do not need to be recompiled into objects, but you will need to link again. No need to say, you must properly manage the dependencies of the headers.
 
 #+LATEX:\newpage
