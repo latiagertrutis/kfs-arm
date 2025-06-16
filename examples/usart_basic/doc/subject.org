@@ -73,7 +73,7 @@ It is not mandatory to use any specific device, although it *must be ARM archite
 
 Only the C and ASM languages are allowed in this project.
 
-In the embedded world there are many, how could I call it... "shortcuts", that auto-generate code for your specific device through evil graphic interfaces, making the user completely disregard what is happening in the background. But we are not here to be that kind of developer, am I right? We are here for being the fighters in the trenches, and building things from scratch. So, it is *forbidden* to use any of those tools. You must *understand* all parts of your code, and seek for the *bare minimum setup* that gets your code working.
+In the embedded world there are many, how could I call it... "shortcuts", that auto-generate code for your specific device through evil graphical interfaces, making the user completely disregard what is happening in the background. But we are not here to be that kind of developer, am I right? We are here for being the fighters in the trenches, and building things from scratch. So, it is *forbidden* to use any of those tools. You must *understand* all parts of your code, and seek for the *bare minimum setup* that gets your code working.
 
 ** Compilation
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Compilation}
@@ -94,7 +94,7 @@ Pay attention to the ~-mthumb~ flag. This flags mean that we are going to use th
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Linking}
 
 
-Each MCU requires his own linker script, so you must write your own based on the MCU documentation. It is *forbidden* to use a generated linker script. You must try to write a linker script as minimal as possible.
+Each MCU requires its own linker script, so you must write your own based on the MCU documentation. It is *forbidden* to use a generated linker script. You must try to write a linker script as simple as possible.
 
 ** Architecture
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Architecture}
@@ -168,7 +168,7 @@ For emulated devices:
 For real devices:
 
 
-- Depending on the board of your choice there will be multiple ways of flashing the code. I recommend to find one that has a JTAG port and a debugger integrated (or at least a JTAG port and a external debugger). This is a standard in the industry to debug embedded devices, from which you can flash and insect your code as it was a normal binary in your local machine. If you are going this way, I recommend you pay a visit to the [[https://openocd.org/][OpenOCD]] project
+- Depending on the board of your choice there will be multiple ways of flashing the code. I recommend to find one that has a JTAG port and a debugger integrated (or at least a JTAG port and an external debugger). This is a standard in the industry to debug embedded devices, from which you can flash and inspect your code as if it were a normal binary on your local machine. If you are going this way, I recommend you pay a visit to the [[https://openocd.org/][OpenOCD]] project
 - Get a serial-to-tty cable (or build one yourself if you are feeling funky), and connect it to the ~Rx~, ~Tx~ and ~GND~ pins of the UART you programmed
 
 Common points:
@@ -176,7 +176,7 @@ Common points:
 - Write startup code that will initialize your MCU and boot into your main program
 - Write a HAL driver to control the UART
 - Write a main program that will first print "Hello 42!", and then will loopback any printable character you type (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
-- Write a minimal linker script that links this into an elf file that must not exceed 20KB
+- Write a minimal linker script that links into an elf file that must not exceed 20KB
 
 #+latex: \newpage
 ** Makefile
@@ -195,7 +195,7 @@ Here are some ideas of interesting bonuses you can make:
 
 - Add a HAL for the leds (if your board has) and use them, for example, to easily visualize a hardfault or a reset status.
 - Add some fancy text functions for the UART: formatted print with buffered characters; a cowsay?
-- Make a good use of any of your peripherals. For example, use a pwm to control a fan speed depending on the temperature of your MCU.
+- Make good use of any of your peripherals. For example, use a pwm to control a fan's speed depending on the temperature of your MCU.
 
 #+LATEX:\newpage
   
@@ -204,4 +204,4 @@ Here are some ideas of interesting bonuses you can make:
 ** Turn-in and peer-evaluation
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Turn-in and peer-evaluation}
 
-This project will be evaluated only by humans. Push your work into a Git repository, as usual. Only the work present on your repository will be evaluated.
+This project will be evaluated only by humans. Push your work into a Git repository, as usual. Only the work present in your repository will be evaluated.
