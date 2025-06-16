@@ -1,23 +1,28 @@
-#+LATEX_HEADER: \let\oldsection\section
-#+LATEX_HEADER: \renewcommand{\section}{\clearpage\oldsection}
-#+LATEX_HEADER: \let\oldsubsection\subsection
-#+LATEX_HEADER: \renewcommand{\subsection}{\clearpage\oldsubsection}
 #+LATEX_HEADER: \usepackage[margin=0.8in]{geometry}
 #+LATEX_HEADER: \usepackage[x11names]{xcolor}
+#+LATEX_HEADER: \usepackage[inline]{enumitem}
+#+LATEX_HEADER: \usepackage{parskip}
+
+#+LATEX_HEADER: \setlist[itemize]{parsep=0pt}
+
 #+LATEX_HEADER: \hypersetup{linktoc = all, colorlinks = true, urlcolor = DodgerBlue1, citecolor = PaleGreen1, linkcolor = black}
-#+LATEX_HEADER: \usepackage{enumitem}
 
-#+OPTIONS: \n:t H:4 num:4 toc:nil
+#+OPTIONS: H:4 num:nil
 
-#+TOC: headlines 4
+#+LATEX:\newpage
 
 * Embedded 101
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Embedded 101}
 Boot and say hello.
 
 mrodrigu ([[mailto:mrodrigu@student.42.fr][mrodrigu@student.42.fr]])
 
-** Chapter I
-*** Introduction to basics
+#+LATEX:\newpage
+
+* Chapter I
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter1}
+** Introduction to basics
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Introduction to basics}
 
 Be welcome to *Embedded 101*.
 
@@ -37,34 +42,43 @@ Good luck and have fun!
 #+ATTR_LATEX: :width 12cm
 [[file:doc/101.jpg]]
 
-** Chapter II
-*** Objectives
+#+LATEX:\newpage
+
+* Chapter II
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter II}
+** Objectives
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Objectives}
 
 Upon completion of this subject you'll have:
 
-#+ATTR_LATEX: :options [noitemsep]
 - A program that will say "Hello 42!" from the USART
 - A HAL (Hardware Abstraction Layer) for controlling the USART peripheral
 - A tiny bootloader to initialize the device and run your program
 - A linker script (ld) that will link your code for your specific device
 - All of the previous combined into an elf file that you will flash in your device
 
+#+LATEX:\newpage
 
-** Chapter III
-*** General instructions
-**** Real vs Emulated
+* Chapter III
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter III}
+** General instructions
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}General instructions}
+** Real vs Emulated
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Real vs Emulated}
 
 @@latex:\leavevmode\\@@
 It is not mandatory to use any specific device, although it *must be ARM architecture*. You can also run your code in qemu by using the fork for arm ~qemu-system-arm~. If you want to do the project with a real device, ask the staff, they may have some devices prepared for you. If not, you can always buy an evaluation board, they should be inexpensive. If I may suggest, look for stm32 boards, there are many kind in different shapes, and ST has loads of documentation and resources available. Some other alternatives could be from Adafruit or Raspberry. Look over the internet, there are many options!
 
-**** Language and Environment
+** Language and Environment
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Language and Environment}
 
 @@latex:\leavevmode\\@@
 This project has no specific constraints about the language you can use. Although I suggest you to really give a thought to your options. Consider that almost all manufacturers provide their mappings in C/C++ format, and you can imagine how many macros mapping addresses there are in those files (I do not want to even start counting), so you would need a way to translate those. At this level you will not have any kind of abstraction whatsoever, so the language of your choice must be capable (and comfortable) of working in this environment. Not mentioning that most of the documentation is written for C so choose wisely.
 
 In the embedded world there are many, how could I call it... "shortcuts", that auto-generate code for your specific device through evil graphic interfaces, making the user completely disregard what is happening in the background. But we are not here to be that kind of developer, am I right? We are here for being the fighters in the trenches, and building things from scratch. So, it is *forbidden* to use any of those tools. You must *understand* all parts of your code, and seek for the *bare minimum setup* that gets your code working.
 
-**** Compilation
+** Compilation
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Compilation}
 
 @@latex:\leavevmode\\@@
 You can use any compiler, depending on the language you use. It is common for C to use ~arm-none-eabi-gcc~. A *Makefile* must be present in order to compile and link the project.
@@ -83,17 +97,20 @@ The following flags *must* be present to build and link your binary:
 
 In the ~-mcpu~ flag make sure to substitute ~xxx~ by the MCU type you are using, for example, ~-mcpu=cortex-m4~.
 
-**** Linking
+** Linking
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Linking}
 
 @@latex:\leavevmode\\@@
 Each MCU requires his own linker script, so you must write your own based on the MCU documentation. It is *forbidden* to use a generated linker script. You must try to write a linker script as minimal as possible.
 
-**** Architecture
+** Architecture
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Architecture}
 
 @@latex:\leavevmode\\@@
 ARM architecture is *mandatory*.
 
-**** Documentation
+** Documentation
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Documentation}
 
 @@latex:\leavevmode\\@@
 There is a lot of documentation available online. Make sure to look at the manufacturer's web site for your specific model, they usually offer not only data sheets and user manuals, but a lot of resources and libraries from which you can get (most of the time) nice ideas for your code. As for my part, here are some useful resources I use:
@@ -104,7 +121,8 @@ There is a lot of documentation available online. Make sure to look at the manuf
 - For any POSIX related consultations, just go to the source: [[https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/][Open Group]]
 
 #+latex: \newpage
-**** Project organization
+** Project organization
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Project organization}
 
 @@latex:\leavevmode\\@@
 In a embedded project (specially a bare-metal one) it is very easy to get messy. One project can support many boards with different HALs, startup codes, and so on. So here is a project structure I suggest to keep things compartmentalized:
@@ -139,9 +157,14 @@ In a embedded project (specially a bare-metal one) it is very easy to get messy.
 
 Substitute ~<your-board-model>~ by the board of your choice. This structure can be easily extended. Notice that ~driver~ only contains ~hal~ drivers, this is because we are running without an underlying OS. Maybe in the future a OS is running and we can add here ~driver/posix~. Also look at the comment at the ~src~. For now, we will end with only one application, but, in the future we may end up with many, so we could choose a combination of ~app + board + os~.
 
-** Chapter IV
-*** Mandatory part
-**** Base
+#+LATEX:\newpage
+
+* Chapter IV
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter IV}
+** Mandatory part
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Mandatory part}
+** Base
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Base}
 
 @@latex:\leavevmode\\@@
 You must make code that executes in the MCU of your choice and is capable of *writing* and *reading* characters from the serial line (UART).
@@ -168,13 +191,18 @@ Common points:
 - Write a minimal linker script that links this into an elf file that must not exceed 20KB
 
 #+latex: \newpage
-**** Makefile
+** Makefile
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Makefile}
 
 @@latex:\leavevmode\\@@
 Your Makefile must compile all sources with the right flags and the right compiler. Notice that you may end with at least two different types of files: ~.c~, and ~.ld~ (if you write some assembler also ~.asm~), so make your rules correctly so all dependencies are correctly managed. For instance, if your linker script changes, your sources do not need to be recompiled into objects, but you will need to link again. No need to say, you must properly manage the dependencies of the headers.
 
-** Chapter V
-*** Bonus part
+#+LATEX:\newpage
+
+* Chapter V
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter V}
+** Bonus part
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Bonus part}
 
 Here are some ideas of interesting bonuses you can make:
 
@@ -183,7 +211,11 @@ Here are some ideas of interesting bonuses you can make:
 - Add some fancy text functions for the UART: formatted print with buffered characters; a cowsay?
 - Make a good use of any of your peripherals. For example, use a pwm to control a fan speed depending on the temperature of your MCU.
 
-** Chapter VI
-*** Turn-in and peer-evaluation
+#+LATEX:\newpage
+  
+* Chapter VI
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Chapter VI}
+** Turn-in and peer-evaluation
+#+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Turn-in and peer-evaluation}
 
 This project will be evaluated only by humans. Push your work into a Git repository, as usual. Only the work present on your repository will be evaluated.
