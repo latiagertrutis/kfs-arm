@@ -83,17 +83,12 @@ You can use any compiler, depending on the language you use. It is common for C 
 
 The following flags *must* be present to build and link your binary:
 
-#+ATTR_LATEX: :options [noitemsep]
-- ARM options:
-  - ~-mcpu=xxx~
-  - ~-mthumb~
-- C options:
-  - ~-fno-builtin~
-- Linker options:
-  - ~-nostdlib~
-  - ~-nodefaultlibs~
+- ~-mcpu=xxx~
+- ~-mthumb~
 
 In the ~-mcpu~ flag make sure to substitute ~xxx~ by the MCU type you are using, for example, ~-mcpu=cortex-m4~.
+
+Pay attention to the ~-mthumb~ flag. This flags mean that we are going to use the Thumb instruction set of ARM. This mandatory since we want to be efficient and minimal, and for our case, will be good enough.
 
 ** Linking
 #+LATEX:\addcontentsline{toc}{subsection}{\protect\numberline{}Linking}
@@ -113,7 +108,7 @@ ARM architecture is *mandatory*.
 
 There is a lot of documentation available online. Make sure to look at the manufacturer's web site for your specific model, they usually offer not only data sheets and user manuals, but a lot of resources and libraries from which you can get (most of the time) nice ideas for your code. As for my part, here are some useful resources I use:
 
-#+ATTR_LATEX: :options [noitemsep]
+
 - [[https://wiki.osdev.org/ARM_Overview][OSDev]]
 - [[https://microcontrollerslab.com/][Microcontrolerslab]]
 - For any POSIX related consultations, just go to the source: [[https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/][Open Group]]
@@ -165,20 +160,19 @@ You must make code that executes in the MCU of your choice and is capable of *wr
 
 For emulated devices:
 
-#+ATTR_LATEX: :options [noitemsep]
+
 - Install ~qemu-system-arm~ in your system
 - Connect the serial line where you will configure the UART to a host character device
 - Create a gdb server at port ~:3333~ and halt the MCU, so you can start it manually and inspect the code as needed
 
 For real devices:
 
-#+ATTR_LATEX: :options [noitemsep]
+
 - Depending on the board of your choice there will be multiple ways of flashing the code. I recommend to find one that has a JTAG port and a debugger integrated (or at least a JTAG port and a external debugger). This is a standard in the industry to debug embedded devices, from which you can flash and insect your code as it was a normal binary in your local machine. If you are going this way, I recommend you pay a visit to the [[https://openocd.org/][OpenOCD]] project
 - Get a serial-to-tty cable (or build one yourself if you are feeling funky), and connect it to the ~Rx~, ~Tx~ and ~GND~ pins of the UART you programmed
 
 Common points:
 
-#+ATTR_LATEX: :options [noitemsep]
 - Write startup code that will initialize your MCU and boot into your main program
 - Write a HAL driver to control the UART
 - Write a main program that will first print "Hello 42!", and then will loopback any printable character you type (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
@@ -199,7 +193,6 @@ Your Makefile must compile all sources with the right flags and the right compil
 
 Here are some ideas of interesting bonuses you can make:
 
-#+ATTR_LATEX: :options [noitemsep]
 - Add a HAL for the leds (if your board has) and use them, for example, to easily visualize a hardfault or a reset status.
 - Add some fancy text functions for the UART: formatted print with buffered characters; a cowsay?
 - Make a good use of any of your peripherals. For example, use a pwm to control a fan speed depending on the temperature of your MCU.
