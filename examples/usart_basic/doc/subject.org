@@ -185,7 +185,7 @@ Common points:
 #+ATTR_LATEX: :options [noitemsep]
 - Write startup code that will initialize your MCU and boot into your main program
 - Write a HAL driver to control the UART
-- Write a main program that will print "Hello 42!", and then will echo back in the line any printable character you type in the terminal emulator (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
+- Write a main program that will first print "Hello 42!", and then will loopback any printable character you type (check tools like ~minicom~ or ~picocom~). You must manage new lines and carriage returns correctly, so your text does not get overwritten
 - Write a minimal linker script that links this into an elf file that must not exceed 20KB
 
 #+latex: \newpage
