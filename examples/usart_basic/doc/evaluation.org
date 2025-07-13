@@ -1,0 +1,37 @@
+#+LATEX_HEADER: \usepackage[margin=1.1in]{geometry}
+#+LATEX_HEADER: \usepackage[x11names]{xcolor}
+#+LATEX_HEADER: \usepackage[inline]{enumitem}
+#+LATEX_HEADER: \usepackage{parskip}
+
+#+LATEX_HEADER: \setlist[itemize]{parsep=0pt}
+
+#+LATEX_HEADER: \hypersetup{linktoc = all, colorlinks = true, urlcolor = DodgerBlue1, citecolor = PaleGreen1, linkcolor = black}
+
+#+OPTIONS: H:4 num:nil
+
+* Introduction
+- <Generic introduction points: Remain polite, student group, etc.>
+- There is not one single way to complete this project, and no mandatory hardware, so, be open-minded in the evaluation of this project, and listen carefully to the evaluatee`s explanations. Be patient and discuss politely any thing that is not clear to you.
+
+* Guidelines
+- <Generic guidelines points: Git repo, malicious aliases, scripts, etc.>
+- This project can be evaluated either with a physical board or an emulated one. Either case the board has not any restriction in its peripherals and construction while it has an ARM based MCU and a serial interface, otherwise the evaluation ends here.
+- Testing for memory leaks and wrong read/writes in embedded code is not as trivial as with a linux application in which you can use tools like ~valgrind~. For this reason try to read over the code and look for wrong practices: Too many global variables, buffers not free`d, not protected read/write, etc. If one could cause a segmentation fault or memory leaks, the evaluation ends here.
+- Only the C and ASM languages are allowed.
+
+* Mandatory Part
+
+** Build
+The following points must be present:
+- The flags ~-mcpu=<xxx>~ and ~-mthumb~ must be used.
+- A linker script must be turned in. The evaluee must be able to explain all the parts:
+  - ~MEMORY~ command: flash and ram.
+  - ~SECTIONS~ command: ~.text~, ~.data~, ~.bss~. And the concepts of input and output sections.
+  - How sections from object files are included in each input section described in the linker script.
+- A Makefile must be turned in and it must:
+  - Re-compile only when a source has changed, and recompile only the minimal amount of sources. For example, if ~foo.c~ and ~baz.c~ depend on ~fish.h~, if ~fish.h~ changes only ~foo.c~ and ~baz.c~ must be recompiled. Of course, if only ~foo.c~ is changed, only this file must be re-compiled.
+  - Re-link only when needed. The code must re-link only if sources changed or the linker script changed. If only the linker script changed, the program must be re-linked but no sources must be re-compiled.
+  - Sources must be explicitly listed.
+
+
+
