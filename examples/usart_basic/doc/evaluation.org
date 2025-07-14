@@ -9,19 +9,29 @@
 
 #+OPTIONS: H:4 num:nil
 
+#+LATEX:\newpage
+
+* Evaluation points
+
+I propose for this project to 
+
 * Introduction
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Introduction}
 - <Generic introduction points: Remain polite, student group, etc.>
 - There is not one single way to complete this project, and no mandatory hardware, so, be open-minded in the evaluation of this project, and listen carefully to the evaluatee`s explanations. Be patient and discuss politely any thing that is not clear to you.
 
 * Guidelines
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Guidelines}
 - <Generic guidelines points: Git repo, malicious aliases, scripts, etc.>
 - This project can be evaluated either with a physical board or an emulated one. Either case the board has not any restriction in its peripherals and construction while it has an ARM based MCU and a serial interface, otherwise the evaluation ends here.
 - Testing for memory leaks and wrong read/writes in embedded code is not as trivial as with a linux application in which you can use tools like ~valgrind~. For this reason try to read over the code and look for wrong practices: Too many global variables, buffers not free`d, not protected read/write, etc. If one could cause a segmentation fault or memory leaks, the evaluation ends here.
 - Only the C and ASM languages are allowed.
 
-* Mandatory Part
+* Mandatory part
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Mandatory part}
 
 ** Build
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Build}
 The following points must be present:
 - The flags ~-mcpu=<xxx>~ and ~-mthumb~ must be used.
 - A linker script must be turned in. The evaluee must be able to explain all the parts:
@@ -32,6 +42,47 @@ The following points must be present:
   - Re-compile only when a source has changed, and recompile only the minimal amount of sources. For example, if ~foo.c~ and ~baz.c~ depend on ~fish.h~, if ~fish.h~ changes only ~foo.c~ and ~baz.c~ must be recompiled. Of course, if only ~foo.c~ is changed, only this file must be re-compiled.
   - Re-link only when needed. The code must re-link only if sources changed or the linker script changed. If only the linker script changed, the program must be re-linked but no sources must be re-compiled.
   - Sources must be explicitly listed.
+- Build process must generate at least an ~elf~ file that does not exceed 20KB.
 
+** Code and organization
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Code and organization}
 
+- Check if there is any conditional compilation, non-free`d buffers, unprotected read/writes, global variable in the application code, or [[https://en.wikipedia.org/wiki/Magic_number_(programming)][magic numbers]]. If any, the evaluation ends here.
+- Check the code organization. It doesn`t need to be like the example in the subject, but the evaluee has to explain how did he organize the code in the following points:
+  - Is the board startup code organized in a board-specific directory? How easy would it be to add a new board?
+  - Is the driver organized so it would be easy to add a new one, no matter if it is a HAL driver or any other kind?
+  - Are the includes well organized per type of include (board/driver/application)?
+  - Is the application code organized in a sub-directory? How easy would it be to add a new application?
 
+** Startup code
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Startup code}
+
+- Is the interrupt vector table located in the right memory address (normally specified in the linker script)?
+- Is the system clock set correctly as specified in the MCU documentation?
+- Is there at least a reset and hardfault interrupt functions?
+- Does the reset function load the ~data~ section and clean the ~bss~ section?
+- Is the startup code minimal, meaning, it does not initialize hardware that is not used?
+
+** Driver code
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Driver code}
+
+Normally driver code is provided by the manufacturer in huge libraries containing all the functionalities of the peripheral. But in this exercise is required to write a trimmed version that only targets one UART from the board. Check the following points:
+
+- There is at least a function for initializing the UART, reading and writing a character. Other helper functions can be present.
+- The UART uses the system clock set in the startup code to initialize the driver.
+
+** Functionality and application code
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Functionality and application code}
+
+- The evaluee must be capable of loading the code using the ~elf~ file and start the program. This may depend of the type of board (virtual or physical), and the type of method used. All of the methods are allowed while the evaluee loads the code into the MCU live during the evaluation.
+- The serial line where the UART is configured must be exposed as a character device in the host computer.
+- Upon starting the program ~Hello 42!~ must be displayed followed by a newline. Then the UART must print back any printable character typed and new lines (CRLF). Check that new lines are displayed as expected in a usual terminal.
+
+** Bonus part
+#+LATEX:\addcontentsline{toc}{section}{\protect\numberline{}Bonus part}
+
+Evaluate the bonus part if, and only if, the mandatory part has been entirely and perfectly done.
+
+The bonus part relies completely on the evaluee`s criterion, there are no restrictions. Be coherent and listen to his/her work. Some example bonus points have been already explained in the subject, read them.
+
+The bonus points must be sufficiently justified in size and value. For example, creating a function for printing strings in the UART driver will not qualify for a bonus point.
